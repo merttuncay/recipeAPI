@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "category", schema = "mendix")
 public class Category extends AuditablePersistentObject {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
     @Column(name="category_name")

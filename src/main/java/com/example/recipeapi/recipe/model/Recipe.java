@@ -3,10 +3,7 @@ package com.example.recipeapi.recipe.model;
 import com.example.recipeapi.base.model.AuditablePersistentObject;
 import com.example.recipeapi.category.model.Category;
 import com.example.recipeapi.ingredient.model.RecipeIngredient;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,8 +21,8 @@ import java.util.Set;
 public class Recipe extends AuditablePersistentObject {
     @Column(name="recipe_name")
     private String recipeName;
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     private Set<RecipeIngredient> recipeIngredients;
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     private Set<Category> categories;
 }

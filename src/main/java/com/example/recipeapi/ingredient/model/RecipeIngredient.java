@@ -17,10 +17,10 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "recipe_ingredient", schema = "mendix")
 public class RecipeIngredient extends AuditablePersistentObject {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
     @Column(name="unit")
