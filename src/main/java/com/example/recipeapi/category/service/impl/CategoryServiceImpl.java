@@ -21,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
 
     @Override
-    public List<Category> search(int recipeId) {
+    public List<Category> search(long recipeId) {
         return repository.findCategoriesByRecipeId(recipeId);
     }
     @Override

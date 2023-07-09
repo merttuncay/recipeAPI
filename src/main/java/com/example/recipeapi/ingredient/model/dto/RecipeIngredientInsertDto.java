@@ -23,8 +23,8 @@ public class RecipeIngredientInsertDto {
     public RecipeIngredient toRecipeIngredient(){
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setId(key);
-        recipeIngredient.setRecipeId(recipe);
-        recipeIngredient.setIngredientId(ingredient);
+        recipeIngredient.setRecipe(recipe);
+        recipeIngredient.setIngredient(ingredient);
         recipeIngredient.setUnit(unit);
         recipeIngredient.setQuantity(quantity);
         recipeIngredient.setDescription(description);

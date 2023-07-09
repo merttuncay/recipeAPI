@@ -9,13 +9,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class CategoryInsertDto {
     private Long key;
-    private Recipe recipeId;
+    private Recipe recipe;
     private String categoryName;
 
     public Category toCategory(){
         Category category = new Category();
         category.setId(key);
-        category.setRecipeId(recipeId);
+        category.setRecipe(recipe);
         category.setCategoryName(categoryName);
         return category;
     }

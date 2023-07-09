@@ -16,9 +16,9 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "category", schema = "mendix")
 public class Category extends AuditablePersistentObject {
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = Recipe.class)
-    @JoinColumn(name = "recipe_id")
-    private Recipe recipeId;
+    @ManyToOne
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
     @Column(name="category_name")
     private String categoryName;
 }

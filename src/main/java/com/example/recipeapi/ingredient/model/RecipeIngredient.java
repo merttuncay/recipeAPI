@@ -17,12 +17,12 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "recipe_ingredient", schema = "mendix")
 public class RecipeIngredient extends AuditablePersistentObject {
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = Recipe.class)
-    @JoinColumn(name = "recipe_id")
-    private Recipe recipeId;
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = Ingredient.class)
-    @JoinColumn(name = "ingredient_id")
-    private Ingredient ingredientId;
+    @ManyToOne
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
+    @ManyToOne
+    @JoinColumn(name = "ingredient_id", nullable = false)
+    private Ingredient ingredient;
     @Column(name="unit")
     private String unit;
     @Column(name="quantity")
