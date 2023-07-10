@@ -1,5 +1,6 @@
 package com.example.recipeapi.recipe.service.impl;
 
+import com.example.recipeapi.recipe.model.Recipe;
 import com.example.recipeapi.recipe.model.dto.RecipeGetDto;
 import com.example.recipeapi.recipe.model.dto.RecipeInsertDto;
 import com.example.recipeapi.recipe.model.dto.RecipeSearchDto;
@@ -24,10 +25,10 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeGetDto> search(RecipeSearchDto searchDto){
-        return repository.search(searchDto.getRecipeName(), searchDto.getCategoryName()).stream().map(RecipeGetDto::new).toList();
+        return repository.search(searchDto.getRecipeName()).stream().map(RecipeGetDto::new).toList();
     }
     @Override
-    public void save(RecipeInsertDto insertDto){
-        repository.saveAndFlush(insertDto.toRecipe());
+    public Recipe save(RecipeInsertDto insertDto){
+        return repository.save(insertDto.toRecipe());
     }
 }

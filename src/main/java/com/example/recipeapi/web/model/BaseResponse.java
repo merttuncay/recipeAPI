@@ -16,4 +16,6 @@ public class BaseResponse {
 
     public static BaseResponse successResponse(Object data, String message){ return new BaseResponse(data, true, message);}
 
+    public static BaseResponse failureResponse(String message) { return new BaseResponse(null,false,message);}
+
 }

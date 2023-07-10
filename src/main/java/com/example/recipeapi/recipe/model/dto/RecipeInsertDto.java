@@ -7,15 +7,15 @@ import com.example.recipeapi.recipe.model.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 public class RecipeInsertDto {
     private long key;
     private String recipeName;
-    private Set<RecipeIngredient> recipeIngredients;
-    private Set<Category> categories;
+    private List<RecipeIngredient> recipeIngredients;
+    private List<Category> categories;
 
     public Recipe toRecipe(){
         Recipe recipe = new Recipe();

@@ -10,11 +10,6 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    @Query(value = """
-            SELECT * FROM mendix.recipe r\s
-            WHERE LOWER(r.recipe_name) like Lower(CONCAT('%',:recipeName,'%')) and EXISTS (
-               SELECT 1 FROM mendix.category c\s
-               WHERE r.id  = c.recipe_id and LOWER(c.category_name) like Lower(CONCAT('%',:categoryName,'%'))
-            )""", nativeQuery = true)
-    List<Recipe> search(String recipeName, String categoryName);
+    @Query(value = "Select r from Recipe r join fetch r.categories")
+    List<Recipe> search(String recipeName);
 }

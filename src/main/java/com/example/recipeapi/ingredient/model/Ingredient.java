@@ -2,11 +2,11 @@ package com.example.recipeapi.ingredient.model;
 
 
 import com.example.recipeapi.base.model.AuditablePersistentObject;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -19,7 +19,5 @@ import java.util.Set;
 public class Ingredient extends AuditablePersistentObject {
     @Column(name="ingredient_name")
     private String ingredientName;
-    @OneToMany(mappedBy = "ingredient", fetch = FetchType.LAZY)
-    private Set<RecipeIngredient> recipeIngredients;
 
 }

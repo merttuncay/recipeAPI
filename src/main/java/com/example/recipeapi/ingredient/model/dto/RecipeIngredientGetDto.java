@@ -13,16 +13,12 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class RecipeIngredientGetDto extends BaseViewModel {
-    private RecipeGetDto recipe;
-    private IngredientGetDto ingredient;
     private String unit;
     private BigDecimal quantity;
     private String description;
 
     public RecipeIngredientGetDto(RecipeIngredient recipeIngredient){
         setKey(recipeIngredient.getId());
-        setIngredient(new IngredientGetDto(recipeIngredient.getIngredient()));
-        setRecipe(new RecipeGetDto(recipeIngredient.getRecipe()));
         setUnit(recipeIngredient.getUnit());
         setQuantity(recipeIngredient.getQuantity());
         setDescription(recipeIngredient.getDescription());
