@@ -25,7 +25,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeGetDto> search(RecipeSearchDto searchDto){
-        return repository.search(searchDto.getRecipeName()).stream().map(RecipeGetDto::new).toList();
+        return repository.search(searchDto.getRecipeName(), searchDto.getCategoryName()).stream().map(RecipeGetDto::new).toList();
     }
     @Override
     public Recipe save(RecipeInsertDto insertDto){
