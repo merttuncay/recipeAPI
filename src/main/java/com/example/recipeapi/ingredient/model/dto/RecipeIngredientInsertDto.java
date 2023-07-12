@@ -1,33 +1,27 @@
 package com.example.recipeapi.ingredient.model.dto;
 
 
-import com.example.recipeapi.ingredient.model.Ingredient;
 import com.example.recipeapi.ingredient.model.RecipeIngredient;
-import com.example.recipeapi.recipe.model.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.math.BigDecimal;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class RecipeIngredientInsertDto {
-    private Long key;
-    private Recipe recipe;
-    private Ingredient ingredient;
     private String unit;
-    private BigDecimal quantity;
+    private String quantity;
     private String description;
+    private IngredientInsertDto ingredientInsertDto;
 
 
     public RecipeIngredient toRecipeIngredient(){
         RecipeIngredient recipeIngredient = new RecipeIngredient();
-        recipeIngredient.setId(key);
-        recipeIngredient.setRecipe(recipe);
-        recipeIngredient.setIngredient(ingredient);
         recipeIngredient.setUnit(unit);
         recipeIngredient.setQuantity(quantity);
         recipeIngredient.setDescription(description);
+        recipeIngredient.setIngredient(ingredientInsertDto.toIngredient());
         return recipeIngredient;
     }
 }

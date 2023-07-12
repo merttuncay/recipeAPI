@@ -7,12 +7,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class IngredientInsertDto {
-    private Long key;
     private String ingredientName;
 
     public Ingredient toIngredient(){
         Ingredient ingredient = new Ingredient();
-        ingredient.setId(key);
         ingredient.setIngredientName(ingredientName);
         return ingredient;
     }

@@ -1,5 +1,6 @@
 package com.example.recipeapi.category.service;
 
+import com.example.recipeapi.category.model.Category;
 import com.example.recipeapi.category.model.dto.CategoryGetDto;
 import com.example.recipeapi.category.model.dto.CategoryInsertDto;
 
@@ -10,5 +11,5 @@ public interface CategoryService {
 
     List<CategoryGetDto> findAllCategories();
 
-    void save(CategoryInsertDto insertDto);
+    Category save(CategoryInsertDto insertDto);
 }

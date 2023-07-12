@@ -20,4 +20,5 @@ public class Ingredient extends AuditablePersistentObject {
     @Column(name="ingredient_name")
     private String ingredientName;
 
+
 }

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +35,7 @@ public class RecipeController {
         return ResponseEntity.ok(BaseResponse.successResponse(null,"Recipe insertion is successful."));
     }
 
-    @PostMapping(
+    @PostMapping(path = "/recipeFileUpload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )

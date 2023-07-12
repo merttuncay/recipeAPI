@@ -22,10 +22,14 @@ import java.util.List;
 public class Recipe extends AuditablePersistentObject {
     @Column(name="recipe_name")
     private String recipeName;
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<RecipeIngredient> recipeIngredients;
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Category> categories;
+    @Column(name="directions")
+    private String directions;
+    @Column(name="yield")
+    private Integer yieldNumber;
 }

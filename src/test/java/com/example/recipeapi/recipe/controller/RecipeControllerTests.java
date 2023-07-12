@@ -1,10 +1,8 @@
 package com.example.recipeapi.recipe.controller;
 
 import com.example.recipeapi.category.model.Category;
-import com.example.recipeapi.category.model.dto.CategoryGetDto;
 import com.example.recipeapi.ingredient.model.Ingredient;
 import com.example.recipeapi.ingredient.model.RecipeIngredient;
-import com.example.recipeapi.ingredient.model.dto.RecipeIngredientGetDto;
 import com.example.recipeapi.recipe.model.Recipe;
 import com.example.recipeapi.recipe.model.dto.RecipeGetDto;
 import com.example.recipeapi.recipe.model.dto.RecipeSearchDto;
@@ -16,13 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -61,7 +56,7 @@ public class RecipeControllerTests {
         ingredient.setIngredientName("Ground chuck or lean ground");
         recipeIngredient.setIngredient(ingredient);
         recipeIngredient.setUnit("pound");
-        recipeIngredient.setQuantity(BigDecimal.ONE);
+        recipeIngredient.setQuantity("");
         recipeIngredient.setRecipe(recipe);
         recipeIngredient.setDescription("beef");
         recipe.setRecipeIngredients(List.of(recipeIngredient));
@@ -69,21 +64,18 @@ public class RecipeControllerTests {
 
     @Test
     void givenRecipe_whenGetRecipe_thenStatus200() throws Exception {
-        RecipeGetDto recipeGetDto = new RecipeGetDto();
-        recipeGetDto.setKey(recipe.getId());
-        recipeGetDto.setRecipeName(recipe.getRecipeName());
-        recipeGetDto.setCategories(recipe.getCategories().stream().map(CategoryGetDto::new).toList());
-        recipeGetDto.setRecipeIngredients(recipe.getRecipeIngredients().stream().map(RecipeIngredientGetDto::new).toList());
-
+        RecipeGetDto recipeGetDto = new RecipeGetDto(recipe);
         List<RecipeGetDto> recipeList = List.of(recipeGetDto);
-
         RecipeSearchDto recipeSearchDto = new RecipeSearchDto();
-
         given(recipeService.search(recipeSearchDto)).willReturn(recipeList);
-
         mockMvc.perform(get("/recipe", recipeSearchDto).flashAttr("recipeSearchDto", recipeSearchDto).sessionAttr("recipeSearchDto", recipeSearchDto)
                         .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(jsonPath("$.data", hasSize(1)))
                 .andExpect(jsonPath("$.data[0].key", is((int)recipe.getId()))).andExpect(jsonPath("$.data[0].recipeName", is(recipe.getRecipeName())));
+    }
+
+    @Test
+    void notGivenRecipe_whenGetRecipe_thenStatus404() throws Exception {
+        mockMvc.perform(get("/recipe/*123").contentType(MediaType.APPLICATION_JSON)).andExpect(status().is4xxClientError());
     }
 
 }

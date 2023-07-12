@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,16 +15,16 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "recipe_ingredient", schema = "mendix")
 public class RecipeIngredient extends AuditablePersistentObject {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
     @Column(name="unit")
     private String unit;
     @Column(name="quantity")
-    private BigDecimal quantity;
+    private String quantity;
     @Column(name="decription")
     private String description;
 }

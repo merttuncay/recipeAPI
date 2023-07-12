@@ -19,7 +19,7 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService service;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<BasePageableResponse> findAll() {
         final List<CategoryGetDto> categoryGetDtoList = service.findAllCategories();
         return ResponseEntity.ok(BasePageableResponse.successResponse(categoryGetDtoList, 1, categoryGetDtoList.size()));

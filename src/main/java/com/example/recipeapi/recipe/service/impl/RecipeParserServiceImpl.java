@@ -1,5 +1,7 @@
 package com.example.recipeapi.recipe.service.impl;
 
+import com.example.recipeapi.category.model.dto.CategoryInsertDto;
+import com.example.recipeapi.ingredient.model.dto.RecipeIngredientInsertDto;
 import com.example.recipeapi.recipe.model.dto.RecipeInsertDto;
 import com.example.recipeapi.recipe.repository.RecipeRepository;
 import com.example.recipeapi.recipe.service.RecipeParserService;
@@ -9,11 +11,15 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.StringReader;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.util.List;
+
+import static com.example.recipeapi.util.XmlUtils.*;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
@@ -23,23 +29,27 @@ public class RecipeParserServiceImpl implements RecipeParserService {
     private final RecipeRepository recipeRepository;
 
     @Override
-    public RecipeInsertDto saveRecipe(byte[] data) throws Exception {
-        RecipeInsertDto recipeInsertDto;
+    public RecipeInsertDto saveRecipe(byte[] data) throws ParserConfigurationException, IOException, SAXException {
+        RecipeInsertDto recipeInsertDto = new RecipeInsertDto();
 
         String recipeString = new String(data);
         Document doc = loadXMLFromString(recipeString);
         doc.getDocumentElement().normalize();
+        Node recipe = getNode(doc,"recipe");
+        Element head = ((Element) recipe.getFirstChild().getNextSibling());
+        recipeInsertDto.setRecipeName(getRecipeName(head));
+        List<CategoryInsertDto> categoryInsertDtoList = getCategories(head);
+        recipeInsertDto.setCategories(categoryInsertDtoList);
+        int yieldNumber = Integer.parseInt(head.getElementsByTagName("yield").item(0).getFirstChild().getNodeValue());
+        recipeInsertDto.setYieldNumber(yieldNumber);
+        Element ingredients = (Element) head.getNextSibling().getNextSibling();
+        List<RecipeIngredientInsertDto> recipeIngredientInsertDtoList = getRecipeIngredients(ingredients);
+        recipeInsertDto.setRecipeIngredients(recipeIngredientInsertDtoList);
+        Element directions = (Element) ingredients.getNextSibling().getNextSibling();
+        recipeInsertDto.setDirections(getDirections(directions));
+        recipeRepository.save(recipeInsertDto.toRecipe());
 
-
-        return null;
+        return recipeInsertDto;
     }
 
-    private Document loadXMLFromString(String xml) throws Exception
-    {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setFeature("https://apache.org/xml/features/disallow-doctype-decl", true);
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        InputSource is = new InputSource(new StringReader(xml));
-        return builder.parse(is);
-    }
 }

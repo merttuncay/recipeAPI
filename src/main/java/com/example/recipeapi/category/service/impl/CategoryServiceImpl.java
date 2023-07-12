@@ -1,5 +1,6 @@
 package com.example.recipeapi.category.service.impl;
 
+import com.example.recipeapi.category.model.Category;
 import com.example.recipeapi.category.model.dto.CategoryGetDto;
 import com.example.recipeapi.category.model.dto.CategoryInsertDto;
 import com.example.recipeapi.category.repository.CategoryRepository;
@@ -30,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
         return repository.findAll().stream().map(CategoryGetDto::new).toList();
     }
     @Override
-    public void save(CategoryInsertDto insertDto){
-        repository.saveAndFlush(insertDto.toCategory());
+    public Category save(CategoryInsertDto insertDto){
+        return repository.save(insertDto.toCategory());
     }
 }

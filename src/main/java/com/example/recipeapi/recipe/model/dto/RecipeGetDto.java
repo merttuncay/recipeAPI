@@ -17,11 +17,15 @@ public class RecipeGetDto extends BaseViewModel {
     private String recipeName;
     private List<RecipeIngredientGetDto> recipeIngredients;
     private List<CategoryGetDto> categories;
+    private String directions;
+    private Integer yieldNumber;
 
     public RecipeGetDto(Recipe recipe){
         setKey(recipe.getId());
         setRecipeName(recipe.getRecipeName());
         setRecipeIngredients(recipe.getRecipeIngredients().stream().map(RecipeIngredientGetDto::new).toList());
         setCategories(recipe.getCategories().stream().map(CategoryGetDto::new).toList());
+        setDirections(recipe.getDirections());
+        setYieldNumber(recipe.getYieldNumber());
     }
 }
