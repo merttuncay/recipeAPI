@@ -34,7 +34,13 @@ Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/
 mvn spring-boot:run
 ```
 
-### Guides and Dependencies
+## Postman Collection
+
+There is a postman collection for sample requests available in following.
+
+[Mendix Postman Collection](https://www.postman.com/avionics-astronaut-80169809/workspace/mypubliccollection/collection/14764670-9c460778-baca-40c0-bcec-c0f484695ff4?action=share&creator=14764670)
+
+## Guides and Dependencies
 
 You could find the following libraries that I use:
 
